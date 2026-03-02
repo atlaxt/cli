@@ -1,0 +1,27 @@
+{
+  "name": "atlaxt",
+  "version": "1.0.0",
+  "description": "Create Atlaxt template projects instantly",
+  "type": "module",
+  "bin": {
+    "atlaxt": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "atlasyigitaydin",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "degit": "^2.8.4",
+    "ora": "^8.0.1",
+    "prompts": "^2.4.2"
+  },
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atlaxt/atlaxt-cli"
+  }
+}
