@@ -1,6 +1,6 @@
 {
   "name": "atlaxt",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Create Atlaxt template projects instantly",
   "type": "module",
   "bin": {

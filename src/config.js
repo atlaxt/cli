@@ -1,24 +1,10 @@
-export const TEMPLATES = {
-  titan: {
-    variants: {
-      vue: {
-        repo: 'atlaxt/titan-vue',
-        stack: 'Vue · PrimeVue',
-      },
-      nuxt: {
-        repo: 'atlaxt/titan-nuxt',
-        stack: 'Nuxt · PrimeVue',
-      },
-    },
-  },
+export const STARTERS = {
+  'vue-primevue': { repo: 'atlaxt/starter-vue-primevue', stack: 'Vue · PrimeVue' },
+  'vue-nuxtui': { repo: 'atlaxt/starter-vue-nuxtui', stack: 'Vue · NuxtUI' },
+  'nuxt-primevue': { repo: 'atlaxt/starter-nuxt-primevue', stack: 'Nuxt · PrimeVue' },
+  'nuxt-nuxtui': { repo: 'atlaxt/starter-nuxt-nuxtui', stack: 'Nuxt · NuxtUI' },
 };
 
-export const TEMPLATE_NAMES = Object.keys(TEMPLATES);
-
-export function getVariants(templateName) {
-  return Object.keys(TEMPLATES[templateName].variants);
-}
-
-export function getTemplate(templateName, variant) {
-  return TEMPLATES[templateName].variants[variant];
+export function getStarter(framework, ui) {
+  return STARTERS[`${framework}-${ui}`];
 }

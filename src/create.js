@@ -3,12 +3,9 @@ import ora from 'ora';
 import degit from 'degit';
 import { existsSync } from 'fs';
 import { resolve } from 'path';
-import { getTemplate } from './config.js';
 import { banner, done } from './ui.js';
 
-export async function create(templateName, variant, projectName) {
-  const { repo, stack } = getTemplate(templateName, variant);
-
+export async function create({ repo, stack }, projectName) {
   const targetPath = resolve(process.cwd(), projectName);
   if (existsSync(targetPath)) {
     banner();
@@ -24,7 +21,7 @@ export async function create(templateName, variant, projectName) {
   const spinner = ora({
     text:
       chalk.gray('downloading ') +
-      chalk.yellow(`${templateName} ${variant}`) +
+      chalk.yellow(stack) +
       chalk.gray(' → ') +
       chalk.green(projectName),
     color: 'cyan',

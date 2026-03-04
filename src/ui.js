@@ -1,5 +1,4 @@
 import chalk from 'chalk';
-import { TEMPLATES } from './config.js';
 
 export function banner() {
   console.log('  ' + chalk.bold.white('atlaxt'));
@@ -10,40 +9,13 @@ export function banner() {
 export function help() {
   banner();
 
-  console.log('  ' + chalk.bold('Usage'));
+  console.log('  ' + chalk.bold('Commands'));
   console.log(
-    '    ' +
-      chalk.cyan('atlaxt') +
-      ' ' +
-      chalk.yellow('<template>') +
-      ' ' +
-      chalk.cyan('<variant>') +
-      ' ' +
-      chalk.green('<project-name>')
+    '    ' + chalk.cyan('atlaxt templates') + chalk.gray('  create a project')
   );
   console.log(
-    '    ' + chalk.cyan('atlaxt templates') + chalk.gray('  interactive mode')
+    '    ' + chalk.cyan('atlaxt tools') + chalk.gray('      run a tool')
   );
-  console.log();
-
-  console.log('  ' + chalk.bold('Templates'));
-  for (const [name, { variants }] of Object.entries(TEMPLATES)) {
-    for (const [variant, { stack }] of Object.entries(variants)) {
-      console.log(
-        '    ' +
-          chalk.yellow(name) +
-          ' ' +
-          chalk.cyan(variant.padEnd(8)) +
-          chalk.gray(stack)
-      );
-    }
-  }
-  console.log();
-
-  console.log('  ' + chalk.bold('Examples'));
-  console.log('    ' + chalk.gray('atlaxt titan vue my-app'));
-  console.log('    ' + chalk.gray('atlaxt titan nuxt my-site'));
-  console.log('    ' + chalk.gray('atlaxt templates'));
   console.log();
 }
 

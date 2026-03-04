@@ -1,6 +1,6 @@
 import prompts from 'prompts';
 import chalk from 'chalk';
-import { TEMPLATES, TEMPLATE_NAMES, getVariants } from './config.js';
+import { getStarter } from './config.js';
 import { banner } from './ui.js';
 import { create } from './create.js';
 
@@ -12,29 +12,28 @@ export async function interactiveTemplates() {
     process.exit(0);
   };
 
-  const { templateName } = await prompts(
+  const { framework } = await prompts(
     {
       type: 'select',
-      name: 'templateName',
-      message: 'Select a template',
-      choices: TEMPLATE_NAMES.map((name) => ({
-        title: chalk.yellow(name),
-        value: name,
-      })),
+      name: 'framework',
+      message: 'Select a framework',
+      choices: [
+        { title: chalk.green('Vue'), value: 'vue' },
+        { title: chalk.green('Nuxt'), value: 'nuxt' },
+      ],
     },
     { onCancel }
   );
 
-  const { variant } = await prompts(
+  const { ui } = await prompts(
     {
       type: 'select',
-      name: 'variant',
-      message: 'Select a variant',
-      choices: getVariants(templateName).map((v) => ({
-        title: chalk.cyan(v),
-        value: v,
-        description: TEMPLATES[templateName].variants[v].stack,
-      })),
+      name: 'ui',
+      message: 'Select a UI library',
+      choices: [
+        { title: chalk.cyan('PrimeVue'), value: 'primevue' },
+        { title: chalk.cyan('NuxtUI'), value: 'nuxtui' },
+      ],
     },
     { onCancel }
   );
@@ -50,5 +49,6 @@ export async function interactiveTemplates() {
     { onCancel }
   );
 
-  await create(templateName, variant, projectName.trim());
+  const starter = getStarter(framework, ui);
+  await create(starter, projectName.trim());
 }
