@@ -1,11 +1,11 @@
-import prompts from 'prompts';
-import chalk from 'chalk';
-import { getStarter } from './config.js';
-import { banner } from './ui.js';
-import { create } from './create.js';
+import prompts from "prompts";
+import chalk from "chalk";
+import { getStarter } from "./config.js";
+import { banner } from "./ui.js";
+import { create } from "./create.js";
 
-export async function interactiveTemplates() {
-  banner();
+export async function interactiveTemplates({ skipBanner = false } = {}) {
+  if (!skipBanner) banner();
 
   const onCancel = () => {
     console.log();
@@ -14,40 +14,42 @@ export async function interactiveTemplates() {
 
   const { framework } = await prompts(
     {
-      type: 'select',
-      name: 'framework',
-      message: 'Select a framework',
+      type: "select",
+      name: "framework",
+      message: chalk.white("framework"),
       choices: [
-        { title: chalk.green('Vue'), value: 'vue' },
-        { title: chalk.green('Nuxt'), value: 'nuxt' },
+        { title: chalk.white("Vue") + "   " + chalk.dim("progressive web framework"), value: "vue" },
+        { title: chalk.white("Nuxt") + "  " + chalk.dim("full-stack Vue framework"), value: "nuxt" },
       ],
     },
-    { onCancel }
+    { onCancel },
   );
 
   const { ui } = await prompts(
     {
-      type: 'select',
-      name: 'ui',
-      message: 'Select a UI library',
+      type: "select",
+      name: "ui",
+      message: chalk.white("UI library"),
       choices: [
-        { title: chalk.cyan('PrimeVue'), value: 'primevue' },
-        { title: chalk.cyan('NuxtUI'), value: 'nuxtui' },
+        { title: chalk.white("PrimeVue") + "  " + chalk.dim("rich component library"), value: "primevue" },
+        { title: chalk.white("NuxtUI") + "    " + chalk.dim("tailwind-based components"), value: "nuxtui" },
       ],
     },
-    { onCancel }
+    { onCancel },
   );
 
   const { projectName } = await prompts(
     {
-      type: 'text',
-      name: 'projectName',
-      message: 'Project name',
+      type: "text",
+      name: "projectName",
+      message: chalk.white("project name"),
       validate: (value) =>
-        value.trim().length > 0 ? true : 'Project name is required',
+        value.trim().length > 0 ? true : chalk.red("project name is required"),
     },
-    { onCancel }
+    { onCancel },
   );
+
+  console.log();
 
   const starter = getStarter(framework, ui);
   await create(starter, projectName.trim());

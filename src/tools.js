@@ -1,18 +1,23 @@
-import prompts from 'prompts';
-import chalk from 'chalk';
-import { execSync } from 'child_process';
-import { banner } from './ui.js';
+import prompts from "prompts";
+import chalk from "chalk";
+import { execSync } from "child_process";
+import { banner } from "./ui.js";
 
 const TOOLS = [
   {
-    title: 'to-favicon',
-    description: 'Generate favicons from an image',
-    command: 'npx @atlaxt/to-favicon',
+    title: "to-favicon",
+    description: "generate favicons from an image",
+    command: "npx @atlaxt/to-favicon",
+  },
+  {
+    title: "to-public",
+    description: "publish your package.json as an always up-to-date json file",
+    command: "npx @atlaxt/to-public",
   },
 ];
 
-export async function interactiveTools() {
-  banner();
+export async function interactiveTools({ skipBanner = false } = {}) {
+  if (!skipBanner) banner();
 
   const onCancel = () => {
     console.log();
@@ -21,23 +26,22 @@ export async function interactiveTools() {
 
   const { tool } = await prompts(
     {
-      type: 'select',
-      name: 'tool',
-      message: 'Select a tool',
+      type: "select",
+      name: "tool",
+      message: chalk.white("select a tool"),
       choices: TOOLS.map((t) => ({
-        title: chalk.yellow(t.title),
+        title: chalk.white(t.title) + "  " + chalk.dim(t.description),
         value: t,
-        description: chalk.gray(t.description),
       })),
     },
-    { onCancel }
+    { onCancel },
   );
 
   console.log();
   console.log(
-    '  ' + chalk.gray('running ') + chalk.cyan(tool.command) + chalk.gray('...')
+    "  " + chalk.dim("running") + "  " + chalk.cyan(tool.command),
   );
   console.log();
 
-  execSync(tool.command, { stdio: 'inherit' });
+  execSync(tool.command, { stdio: "inherit" });
 }
